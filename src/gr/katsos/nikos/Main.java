@@ -1,15 +1,27 @@
 package gr.katsos.nikos;
 
-import javax.swing.*;
 import java.io.File;
+import javax.swing.JFileChooser;
 
 public class Main {
 
     private static File file;
     private static JFileChooser fileChooser;
+    private static Mapper fileMapper;
 
     public static void main(String[] args) {
 
+        argumentsHandler(args);
+
+        if ( file != null && file.exists() ) {
+            fileMapper = new Mapper(file);
+            fileMapper.map();
+            fileMapper.dummy();
+        }
+
+    }
+
+    private static void argumentsHandler(String[] args) {
         if ( args.length == 0) {
             openFileChooser();
         } else if ( pathIsValid(args[0]) ) {
@@ -20,8 +32,10 @@ public class Main {
             } finally {
                 System.gc();
             }
+        } else {
+            System.err.println("Invalid arguments");
+            System.exit(-1);
         }
-
     }
 
     private static void openFileChooser() {
@@ -33,6 +47,8 @@ public class Main {
             if ( status == JFileChooser.APPROVE_OPTION ) {
                 String filepath = fileChooser.getSelectedFile().getAbsolutePath();
                 setFile(filepath);
+            } else if ( status == JFileChooser.CANCEL_OPTION ) {
+                System.out.println("File choosing canceled!");
             }
         } catch (Exception e) {
             System.err.print(e.getMessage());
