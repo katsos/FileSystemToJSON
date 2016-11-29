@@ -50,8 +50,24 @@ public class FileExtended extends File {
         this.permissions = sb.toString().trim().replace(' ', '-');
     }
 
-    private void setContent( ArrayList<FileExtended> content ) {
-        this.content = content;
+    /**
+     * If this is not a folder, set content equal to null.
+     * Else initialize an array-list of files(extended) 
+     * and add this directory's included files.
+     */
+    private void setContent() {
+        
+        if ( !this.isDirectory() ) {
+            content = null;
+            return;
+        }
+
+        content = new ArrayList();
+        File[] filesArray = this.listFiles();
+        
+        for (File f : filesArray) {
+            content.add( new FileExtended(f.getAbsolutePath()));
+        }
     }
     
     public String getType() {
