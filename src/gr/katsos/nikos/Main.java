@@ -60,7 +60,9 @@ public class Main {
     private static void setFile(String filepath) {
         try {
             file = new File(filepath);
-            System.out.println("Chosen file/folder: " + file.getAbsoluteFile());
+            String mess = "Chosen " + (file.isDirectory() ? "folder" : "folder") 
+                    + ": " + file.getAbsoluteFile();
+            System.out.println(mess);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
