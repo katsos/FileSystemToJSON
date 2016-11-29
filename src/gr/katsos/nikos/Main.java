@@ -5,20 +5,17 @@ import javax.swing.JFileChooser;
 
 public class Main {
 
-    private static File file;
+    private static FileExtended file;
     private static JFileChooser fileChooser;
-    private static Mapper fileMapper;
 
     public static void main(String[] args) {
+        file = new FileExtended("/Users/nkatsos/Downloads/content.pdf");
 
-        argumentsHandler(args);
-
-        if ( file != null && file.exists() ) {
-            fileMapper = new Mapper(file);
-            fileMapper.map();
-            fileMapper.dummy();
+        try {
+            System.out.println(file.toJson());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
     }
 
     private static void argumentsHandler(String[] args) {
@@ -59,7 +56,7 @@ public class Main {
 
     private static void setFile(String filepath) {
         try {
-            file = new File(filepath);
+            file = new FileExtended(filepath);
             String mess = "Chosen " + (file.isDirectory() ? "folder" : "folder") 
                     + ": " + file.getAbsoluteFile();
             System.out.println(mess);
