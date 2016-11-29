@@ -1,29 +1,33 @@
 package gr.katsos.nikos;
 
 import java.io.File;
-import gr.katsos.nikos.JSON.JSONfile;
+import java.util.ArrayList;
 
 public class Mapper {
 
     private final File file;
-    private final JSONfile jsonFile;
+    private final FileExtended jsonFile;
 
     public Mapper(File file) {
         this.file = file;
-        jsonFile = new JSONfile(file);
+        jsonFile = new FileExtended(file.getAbsolutePath());
     }
 
     public void map() {
-
         if ( !file.isDirectory() ) return;
+        getFilesOfFolder(file);
+    }
+    
+    private static ArrayList<FileExtended> getFilesOfFolder( File file ) {
         
-        File[] files = file.listFiles();
-        if ( files.length == 0 ) return;
-
-//        for (File file : files) {
-//            content.add( new JSONfile(file) );
-//        }
-
+        ArrayList<FileExtended> files = new ArrayList();
+        File[] filesArray = file.listFiles();
+        
+        for (File f : filesArray) {
+            files.add( new FileExtended(f.getAbsolutePath()));
+        }
+        
+        return files;
     }
     
     public void dummy() {
