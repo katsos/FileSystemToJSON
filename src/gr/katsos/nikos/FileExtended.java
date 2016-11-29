@@ -45,7 +45,7 @@ public class FileExtended extends File {
         if ( this.canExecute() )
             sb.append("execute");
                   
-        this.permissions = sb.toString().replace(' ', '-').trim();
+        this.permissions = sb.toString().trim().replace(' ', '-');
     }
 
     private void setContent( ArrayList<FileExtended> content ) {
