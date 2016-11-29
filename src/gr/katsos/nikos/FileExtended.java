@@ -1,6 +1,7 @@
 package gr.katsos.nikos;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import org.json.simple.*;
 
@@ -59,5 +60,22 @@ public class FileExtended extends File {
     
     public String getPermissions() {
         return permissions;
+    }
+    
+    public String toJson() throws Exception {
+        JSONObject obj = new JSONObject();
+        
+        Field[] fields = FileExtended.class.getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                if (field.get(this)==null) continue;
+                obj.put(field.getName(), field.get(this));
+            } catch (Exception ex) {
+                throw new Exception("Couldn't convert file " + this.getName() 
+                        + " into json! \n" +  ex.getMessage());
+            }
+        }
+
+        return obj.toJSONString();
     }
 }
