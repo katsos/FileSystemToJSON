@@ -2,6 +2,7 @@ package gr.katsos.nikos;
 
 import java.io.File;
 import java.util.ArrayList;
+import org.json.simple.*;
 
 public class FileExtended extends File {
 
