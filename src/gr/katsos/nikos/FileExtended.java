@@ -19,7 +19,7 @@ public class FileExtended extends File {
 
     private void setType() {
 
-        if ( this.isDirectory() ) {
+        if (this.isDirectory()) {
             type = "directory";
             return;
         }
@@ -36,17 +36,20 @@ public class FileExtended extends File {
             type = extension;
         }
     }
-    
+
     private void setPermissions() {
         StringBuilder sb = new StringBuilder();
-        
-        if ( this.canRead() ) 
+
+        if (this.canRead()) {
             sb.append("read ");
-        if ( this.canWrite() )
+        }
+        if (this.canWrite()) {
             sb.append("write ");
-        if ( this.canExecute() )
+        }
+        if (this.canExecute()) {
             sb.append("execute");
-                  
+        }
+
         this.permissions = sb.toString().trim().replace(' ', '-');
     }
 
@@ -69,29 +72,32 @@ public class FileExtended extends File {
             content.add( new FileExtended(f.getAbsolutePath()));
         }
     }
-    
+
     public String getType() {
         return type;
     }
-    
+
     public String getPermissions() {
         return permissions;
     }
-    
+
     public String toJson() throws Exception {
         JSONObject obj = new JSONObject();
-        
+
         Field[] fields = FileExtended.class.getDeclaredFields();
         for (Field field : fields) {
             try {
-                if (field.get(this)==null) continue;
+                if (field.get(this) == null) {
+                    continue;
+                }
                 obj.put(field.getName(), field.get(this));
             } catch (Exception ex) {
-                throw new Exception("Couldn't convert file " + this.getName() 
-                        + " into json! \n" +  ex.getMessage());
+                throw new Exception("Couldn't convert file " + this.getName()
+                        + " into json! \n" + ex.getMessage());
             }
         }
 
         return obj.toJSONString();
     }
+
 }
