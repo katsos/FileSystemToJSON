@@ -54,23 +54,24 @@ public class FileExtended extends File {
     }
 
     /**
-     * If this is not a folder, set content equal to null.
-     * Else initialize an array-list of files(extended) 
-     * and add this directory's included files.
+     * Convert listFiles array attribute of java.io.File to ArrayList of
+     * FileExtended object (for files) or ArrayList of FileExtended objects (for
+     * folders).
      */
-    private void setContent() {
-        
-        if ( !this.isDirectory() ) {
-            content = null;
-            return;
+    public void setContent() {
+        content = new ArrayList();
+        File[] filesList = this.listFiles();
+        for (File f : filesList) {
+            content.add(new FileExtended(f.getAbsolutePath()));
+        }
+    }
+
+    public ArrayList getContent() {
+        if (content == null) {
+            setContent();
         }
 
-        content = new ArrayList();
-        File[] filesArray = this.listFiles();
-        
-        for (File f : filesArray) {
-            content.add( new FileExtended(f.getAbsolutePath()));
-        }
+        return content;
     }
 
     public String getType() {
