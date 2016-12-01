@@ -1,7 +1,13 @@
+## IntelliJ IDEA
 .idea
-nbproject
 out
 *.iml
+
+
+## NetBeans IDE
+build
+lib/CopyLibs
+lib/nblibraries.properties
+nbproject
 build.xml
 manifest.mf
-/build/
