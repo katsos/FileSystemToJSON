@@ -1,7 +1,6 @@
 package gr.katsos.nikos;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import org.json.simple.*;
 
@@ -58,26 +57,33 @@ public class FileExtended extends File {
      * FileExtended object (for files) or ArrayList of FileExtended objects (for
      * folders).
      */
-    public void setContent() {
+    private void setContent() {
         content = new ArrayList();
         File[] filesList = this.listFiles();
         for (File f : filesList) {
+            if ( f.isHidden() ) continue;
             content.add(new FileExtended(f.getAbsolutePath()));
-            if(depthExplored ==2) System.out.println(f.getAbsolutePath());
+            System.out.println(f.getAbsolutePath());
         }
     }
 
-    public static int depthExplored = 0;
-
+    public void mapContent() {
+        mapContent(Integer.MAX_VALUE);
+    }
+    
+    /** dedicated variable for mapContent() method */
+    private static int depthExplored = 1;
+    /**
+     * Requests root file to search recursively into its sub-folders
+     * and map files and folders below it.
+     * @param maxDepth the maximum depth to search for files
+     */
     public void mapContent(int maxDepth) {
         setContent();
-        depthExplored++;
-
         for (FileExtended file : content) {
             if (file.isDirectory() && depthExplored < maxDepth) {
                 depthExplored++;
-                file.mapContent(maxDepth);
-                System.out.println(depthExplored);
+                file.mapContent(maxDepth); // Recursion
                 depthExplored--;
             }
         }
