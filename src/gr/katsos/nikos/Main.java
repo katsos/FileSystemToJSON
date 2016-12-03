@@ -2,6 +2,7 @@ package gr.katsos.nikos;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import org.apache.commons.cli.*;
 
 public class Main {
 
@@ -18,21 +19,62 @@ public class Main {
         }
     }
 
-    private static void argumentsHandler(String[] args) {
-        if ( args.length == 0) {
-            openFileChooser();
-        } else if ( pathIsValid(args[0]) ) {
-            try {
-                setFile(args[1]);
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            } finally {
-                System.gc();
+    private static void parseArguments(String[] args){        
+        CommandLineParser parser = new DefaultParser();        
+        
+        Options options = new Options();
+        options.addOption("t", "type", false, "display current type");
+        options.addOption("p", "permissions", false, "Display current permissions");
+        options.addOption("n", "name", false, "display current name");        
+        options.addOption("T", "no-type", false, "display current type");
+        options.addOption("P", "no-permissions", false, "display current type");
+        options.addOption("N", "no-name", false, "display current type");
+        options.addOption( Option.builder( "d" ).longOpt( "depth" )
+                                .desc( "execute to this depth value" )
+                                .hasArg()
+                                .required( false )
+                                .argName( "value" )
+                                .build() );
+        String val; //= new String[];
+        
+        try {
+            // parse the command line arguments
+            CommandLine line = parser.parse( options, args );
+                       
+            // set the depth value that user gives
+            if( line.hasOption( "depth" ) ) {
+                val = line.getOptionValue( "depth" );
+                mapContent(val);
             }
-        } else {
-            System.err.println("Invalid arguments");
-            System.exit(-1);
+            else {
+                mapContent();
+            }             
+            
+            while( line.iterator().hasNext() ){
+                
+            }
         }
+        catch( ParseException exp ) {
+            System.out.println( "Unexpected exception:" + exp.getMessage() );
+        }
+    }
+
+    private static void argumentsHandler(String[] args) {
+        if ( args.length < 2 ) {
+            openFileChooser();
+            return;
+        }
+        if( args.length == 2 ){
+            if( pathIsValid(args[1]) ){
+                setFile(args[1]);
+                return;
+            }
+
+            System.err.println("Invalid arguments");
+            System.exit(-1); 
+        }
+
+        parseArguments(args);
     }
 
     private static void openFileChooser() {
