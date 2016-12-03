@@ -29,16 +29,23 @@ public class Main {
                                 .required( false )
                                 .argName( "value" )
                                 .build() );
-        String val; //= new String[];
         
         try {
             // parse the command line arguments
             CommandLine line = parser.parse( options, args );
-                       
+            
             // set the depth value that user gives
             if( line.hasOption( "depth" ) ) {
-                val = line.getOptionValue( "depth" );
-                mapContent(val);
+                String depthInput = line.getOptionValue( "depth" );
+                int depth;
+                
+                try {
+                    depth = Integer.parseInt(depthInput);
+                    sourceFile.mapContent(depth);
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid depth input!");
+                    System.exit(-2);
+                }
             }
             else {
                 mapContent();
