@@ -9,16 +9,8 @@ public class Main {
     private static FileExtended file;
     private static JFileChooser fileChooser;
 
-    public static void main(String[] args) {
-        file = new FileExtended("C:\\Program Files");
-
-        file.mapContent(2);
-        
-        try {
-            System.out.println(file.toJson());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        argumentsHandler(args);
     }
 
     private static void parseArguments(String[] args){        
