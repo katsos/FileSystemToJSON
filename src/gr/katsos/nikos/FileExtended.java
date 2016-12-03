@@ -1,7 +1,6 @@
 package gr.katsos.nikos;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import org.json.simple.*;
 
@@ -19,7 +18,7 @@ public class FileExtended extends File {
 
     private void setType() {
 
-        if ( this.isDirectory() ) {
+        if (this.isDirectory()) {
             type = "directory";
             return;
         }
@@ -36,62 +35,107 @@ public class FileExtended extends File {
             type = extension;
         }
     }
-    
+
     private void setPermissions() {
         StringBuilder sb = new StringBuilder();
-        
-        if ( this.canRead() ) 
+
+        if (this.canRead()) {
             sb.append("read ");
-        if ( this.canWrite() )
+        }
+        if (this.canWrite()) {
             sb.append("write ");
-        if ( this.canExecute() )
+        }
+        if (this.canExecute()) {
             sb.append("execute");
-                  
+        }
+
         this.permissions = sb.toString().trim().replace(' ', '-');
     }
 
     /**
-     * If this is not a folder, set content equal to null.
-     * Else initialize an array-list of files(extended) 
-     * and add this directory's included files.
+     * Convert listFiles array attribute of java.io.File to ArrayList of
+     * FileExtended object (for files) or ArrayList of FileExtended objects (for
+     * folders).
      */
     private void setContent() {
-        
-        if ( !this.isDirectory() ) {
-            content = null;
-            return;
-        }
-
         content = new ArrayList();
-        File[] filesArray = this.listFiles();
-        
-        for (File f : filesArray) {
-            content.add( new FileExtended(f.getAbsolutePath()));
+        File[] filesList = this.listFiles();
+        for (File f : filesList) {
+            if ( f.isHidden() ) continue;
+            content.add(new FileExtended(f.getAbsolutePath()));
+            System.out.println(f.getAbsolutePath());
         }
     }
+
+    public void mapContent() {
+        mapContent(Integer.MAX_VALUE);
+    }
     
+    /** dedicated variable for mapContent() method */
+    private static int depthExplored = 1;
+    /**
+     * Requests root file to search recursively into its sub-folders
+     * and map files and folders below it.
+     * @param maxDepth the maximum depth to search for files
+     */
+    public void mapContent(int maxDepth) {
+        setContent();
+        for (FileExtended file : content) {
+            if (file.isDirectory() && depthExplored < maxDepth) {
+                depthExplored++;
+                file.mapContent(maxDepth); // Recursion
+                depthExplored--;
+            }
+        }
+    }
+
+    public ArrayList<FileExtended> getContent() {
+        if (content == null) {
+            setContent();
+        }
+
+        return content;
+    }
+
     public String getType() {
         return type;
     }
-    
+
     public String getPermissions() {
         return permissions;
     }
-    
+
     public String toJson() throws Exception {
         JSONObject obj = new JSONObject();
-        
-        Field[] fields = FileExtended.class.getDeclaredFields();
-        for (Field field : fields) {
-            try {
-                if (field.get(this)==null) continue;
-                obj.put(field.getName(), field.get(this));
-            } catch (Exception ex) {
-                throw new Exception("Couldn't convert file " + this.getName() 
-                        + " into json! \n" +  ex.getMessage());
-            }
+        obj.put("name", this.getName());
+        JSONArray contentJSONArray = new JSONArray();
+        for (FileExtended file : content) {
+            contentJSONArray.add(
+                    new JSONObject().put("name", file.getName()));
         }
+        obj.put("content", contentJSONArray);
+
+//        Field[] fields = FileExtended.class.getDeclaredFields();
+//        for (Field field : fields) {
+//            try {
+//                if (field.get(this) == null) {
+//                    continue;
+//                }
+//                obj.put(field.getName(), field.get(this));
+//            } catch (Exception ex) {
+//                throw new Exception("Couldn't convert file " + this.getName()
+//                        + " into json! \n" + ex.getMessage());
+//            }
+//        }
 
         return obj.toJSONString();
+    }
+
+    public JSONArray contentToJson() {
+        JSONArray contentJSONArray = new JSONArray();
+        for (FileExtended file : content) {
+            contentJSONArray.add(file.getName());
+        }
+        return contentJSONArray;
     }
 }

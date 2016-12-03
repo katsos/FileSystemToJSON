@@ -10,8 +10,10 @@ public class Main {
     private static JFileChooser fileChooser;
 
     public static void main(String[] args) {
-        file = new FileExtended("/Users/nkatsos/Downloads/content.pdf");
+        file = new FileExtended("C:\\Program Files");
 
+        file.mapContent(2);
+        
         try {
             System.out.println(file.toJson());
         } catch (Exception ex) {
