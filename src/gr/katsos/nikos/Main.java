@@ -1,12 +1,13 @@
 package gr.katsos.nikos;
 
-import java.io.File;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import org.apache.commons.cli.*;
 
 public class Main {
 
-    private static FileExtended file;
+    private static FileExtended sourceFile;
+    private static FileExtended destinFile;
     private static JFileChooser fileChooser;
 
     public static void main(String[] args) throws Exception {
@@ -48,12 +49,9 @@ public class Main {
                 }
             }
             else {
-                mapContent();
+                sourceFile.mapContent();
             }             
-            
-            while( line.iterator().hasNext() ){
-                
-            }
+
         }
         catch( ParseException exp ) {
             System.out.println( "Unexpected exception:" + exp.getMessage() );
@@ -109,23 +107,18 @@ public class Main {
             }
         } catch (Exception e) {
             System.err.print(e.getMessage());
-        } finally {
-            System.gc();
         }
     }
 
     private static void setFile(String filepath) {
         try {
-            file = new FileExtended(filepath);
-            String mess = "Chosen " + (file.isDirectory() ? "folder" : "folder") 
-                    + ": " + file.getAbsoluteFile();
+            sourceFile = new FileExtended(filepath);
+            String mess = "Chosen " + (sourceFile.isDirectory() ? "folder" : "folder") 
+                    + ": " + sourceFile.getAbsoluteFile();
             System.out.println(mess);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    private static boolean pathIsValid (String path) {
-        return new File(path).exists();
-    }
 }
