@@ -60,22 +60,39 @@ public class Main {
         }
     }
 
-    private static void argumentsHandler(String[] args) {
-        if ( args.length < 2 ) {
+    private static void argumentsHandler(String[] args) throws Exception {
+        /* if no arguments given, start gui file chooser*/
+        if ( args.length == 0 ) {
             openFileChooser();
-            return;
-        }
-        if( args.length == 2 ){
-            if( pathIsValid(args[1]) ){
-                setFile(args[1]);
-                return;
-            }
+        } else {
+            /* else the ammount of arguments is more than two */
+           sourceFile = new FileExtended(args[0]);
 
-            System.err.println("Invalid arguments");
-            System.exit(-1); 
-        }
+           if ( args.length > 1 ) {
+               destinFile = new FileExtended(args[1]);
+               if ( !destinFile.exists() ) {
+                   try {
+                       destinFile.createNewFile();
+                   } catch (IOException ex) {
+                       System.err.println("Couldn't create " 
+                               + destinFile.getAbsolutePath());
+                       System.exit(-4);
+   //                    System.out.println("The output file "
+   //                            + sourceFile.getAbsolutePath() + ".json"
+   //                            + " is going to be created automatically");
+                   }
+               }
 
-        parseArguments(args);
+               if ( args.length < 3 ) {
+                   sourceFile.mapContent();
+               } else {
+                   parseArguments(args);
+               }
+           }           
+            
+        }
+        
+        sourceFile.toJson();
     }
 
     private static void openFileChooser() {
