@@ -110,15 +110,18 @@ public class Main {
         }
     }
 
-    private static void setFile(String filepath) {
-        try {
-            sourceFile = new FileExtended(filepath);
-            String mess = "Chosen " + (sourceFile.isDirectory() ? "folder" : "folder") 
-                    + ": " + sourceFile.getAbsoluteFile();
-            System.out.println(mess);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+    public static void setSourceFile(String filepath) {
+        sourceFile = new FileExtended(filepath);
+        
+        if ( !sourceFile.exists() ) {
+            System.err.println("The requested file or folder doesn't exist.");
+            System.exit(-6);
         }
+        
+        String mess = "Chosen " 
+                + (sourceFile.isDirectory() ? "folder" : "folder")
+                + ": " + sourceFile.getAbsoluteFile();
+        System.out.println(mess);
     }
 
 }
