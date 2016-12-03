@@ -10,6 +10,7 @@ public class GUI {
     public static void openFileChooser() {
         try {
             fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Choose the folder you want to JSONize");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             int status = fileChooser.showOpenDialog(null);
 
