@@ -31,12 +31,9 @@ public class Main {
             try {
                 destinFile.createNewFile();
             } catch (IOException ex) {
-                System.err.println("Couldn't create "
-                        + destinFile.getAbsolutePath());
+                System.err.printf("Couldn't create %s file", 
+                        destinFile.getAbsolutePath());
                 System.exit(-4);
-                // System.out.println("The output file "
-                //      + sourceFile.getAbsolutePath() + ".json"
-                //      + " is going to be created automatically");
             }
         }
     }
