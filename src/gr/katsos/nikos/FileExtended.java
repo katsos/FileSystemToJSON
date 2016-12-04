@@ -105,7 +105,7 @@ public class FileExtended extends File {
         return permissions;
     }
 
-    public String toJson() throws Exception {
+    public String toJson() {
         JSONObject obj = new JSONObject();
         obj.put("name", this.getName());
         JSONArray contentJSONArray = new JSONArray();
