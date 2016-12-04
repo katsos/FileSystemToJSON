@@ -1,5 +1,6 @@
 package gr.katsos.nikos;
 
+import java.util.ArrayList;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -52,9 +53,8 @@ public class Arguments {
             if (command.getOptions().length == 0) {
                 Main.getSourceFile().toJson();
             } else {
-
-                // fetch options
-                // call json with array options
+                String[] optionsMet = parseOptions();
+                Main.getSourceFile().toJson(optionsMet);
             }
 
         } catch (ParseException e) {
@@ -91,6 +91,17 @@ public class Arguments {
         }
         
         return 0;
+    }
+
+    private static String[] parseOptions() {
+        ArrayList<String> optionsList = new ArrayList();
+        
+        for( Option option : command.getOptions() ) {
+            if ( option.hasArgs() ) continue;
+            optionsList.add(option.getLongOpt());
+        }
+        
+        return optionsList.toArray(new String[0]);
     }
 
 }
