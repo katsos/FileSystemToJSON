@@ -8,8 +8,12 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 public class Arguments {
-    
-    public static void handle( String[] args ) {
+
+    private static CommandLineParser parser;
+    private static CommandLine command;
+    private static Options options;
+
+    public static void handle(String[] args) {
         /* if no arguments given, start gui file chooser*/
         if (args.length == 0) {
             GUI.openFileChooser();
@@ -28,48 +32,65 @@ public class Arguments {
 
         }
     }
-    
-    private static void parse(String[] args) {
-        CommandLineParser parser = new DefaultParser();
 
-        Options options = new Options()
-        .addOption("t", "type", false, "display current type")
-        .addOption("p", "permissions", false, "Display current permissions")
-        .addOption("n", "name", false, "display current name")
-        .addOption("T", "no-type", false, "display current type")
-        .addOption("P", "no-permissions", false, "display current type")
-        .addOption("N", "no-name", false, "display current type")
-        .addOption(Option.builder("d").longOpt("depth")
-                .desc("execute to this depth value")
-                .hasArg()
-                .required(false)
-                .argName("value")
-                .build());
+    private static void parse(String[] args) {
+        parser = new DefaultParser();
+        setOptions();
 
         try {
             // parse the command line arguments
-            CommandLine line = parser.parse(options, args);
+            command = parser.parse(options, args);
 
             // set the depth value that user gives
-            if (line.hasOption("depth")) {
-                String depthInput = line.getOptionValue("depth");
-                int depth;
-
-                try {
-                    depth = Integer.parseInt(depthInput);
-                    Main.getSourceFile().mapContent(depth);
-                } catch (NumberFormatException e) {
-                    System.err.println("Invalid depth input!");
-                    System.exit(-2);
-                }
+            if (command.hasOption("depth")) {
+                int depth = parseDepthOption();
+                Main.getSourceFile().mapContent(depth);
             } else {
                 Main.getSourceFile().mapContent();
             }
 
-        } catch (ParseException exp) {
-            System.out.println("Unexpected exception:" + exp.getMessage());
+            if (command.getOptions().length == 0) {
+                Main.getSourceFile().toJson();
+            } else {
+
+                // fetch options
+                // call json with array options
+            }
+
+        } catch (ParseException e) {
+            System.err.println("An error occured while parsing the arguments!");
+            System.err.println(e.getMessage());
+            System.exit(2001);
         }
 
-    }        
+    }
+
+    private static void setOptions() {
+        options = new Options()
+            .addOption("t", "type", false, "display current type")
+            .addOption("p", "permissions", false, "Display current permissions")
+            .addOption("n", "name", false, "display current name")
+            .addOption("T", "no-type", false, "display current type")
+            .addOption("P", "no-permissions", false, "display current type")
+            .addOption("N", "no-name", false, "display current type")
+            .addOption(Option.builder("d").longOpt("depth")
+                .desc("execute to this depth value")
+                .hasArg()
+                .required(false)
+                .build());
+    }
+
+    private static int parseDepthOption() {
+        String depthInput = command.getOptionValue("depth");
+
+        try {
+            return Integer.parseInt(depthInput);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid depth input!");
+            System.exit(-2);
+        }
+        
+        return 0;
+    }
 
 }
