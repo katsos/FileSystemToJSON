@@ -49,12 +49,12 @@ public class Arguments {
             } else {
                 Main.getSourceFile().mapContent();
             }
-
-            if (command.getOptions().length == 0) {
-                Main.getSourceFile().toJson();
+            
+            if (command.getOptions().length == 1) { // TODO: fix this line
+                Main.finalJson = Main.getSourceFile().toJson();
             } else {
                 String[] optionsMet = parseOptions();
-                Main.getSourceFile().toJson(optionsMet);
+                Main.finalJson = Main.getSourceFile().toJson(optionsMet);
             }
 
         } catch (ParseException e) {

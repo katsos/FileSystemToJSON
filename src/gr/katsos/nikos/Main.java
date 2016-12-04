@@ -6,9 +6,11 @@ public class Main {
 
     private static FileExtended sourceFile;
     private static FileExtended destinFile;
+    public static String finalJson;
 
     public static void main(String[] args) throws Exception {
         Arguments.handle(args);
+        System.out.println(finalJson);
     }
 
     public static void setSourceFile(String filepath) {
