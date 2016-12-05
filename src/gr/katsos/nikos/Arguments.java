@@ -19,16 +19,16 @@ public class Arguments {
         if (args.length == 0) {
             GUI.openFileChooser();
         } else {
-            /* else the ammount of arguments is more than two */
             Main.setSourceFile(args[0]);
 
-            if (args.length > 1) {
-                Main.setDestinFile(args[1]);
-                if (args.length < 3) {
-                    Main.getSourceFile().mapContent();
-                } else {
-                    Arguments.parse(args);
+            if (args.length < 3) {
+                if ( args.length == 3 ) {
+                    Main.setDestinFile(args[1]);
                 }
+                Main.getSourceFile().mapContent();
+                Main.finalJson = Main.getSourceFile().toJson();
+            } else {
+                Arguments.parse(args);
             }
 
         }
