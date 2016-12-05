@@ -107,7 +107,15 @@ public class FileExtended extends File {
         return permissions;
     }
 
+    /**
+     * Print the default JSON format.
+     * @return the JSON result as a string
+     */
     public String toJson() {
+        return toJson(null).toString();
+    }
+    
+    public JSONObject toJson(String[] options) { // TODO: add options exceptions
         JSONObject obj = new JSONObject();
         
         Field[] fields = FileExtended.class.getDeclaredFields();
@@ -129,18 +137,15 @@ public class FileExtended extends File {
             obj.put("content", contentJSONArray);            
         }
 
-        return obj.toJSONString();
-    }
-
-    public String toJson( String[] options ) {
-        return null;
+        return obj;
     }
     
     public JSONArray contentToJson() {
         JSONArray contentJSONArray = new JSONArray();
         for (FileExtended file : content) {
-            contentJSONArray.add(file.toJson());
+            contentJSONArray.add(file.toJson(null));
         }
         return contentJSONArray;
     }
+
 }
