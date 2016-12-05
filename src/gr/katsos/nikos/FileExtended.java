@@ -106,13 +106,13 @@ public class FileExtended extends File {
     public String getPermissions() {
         return permissions;
     }
-
+    
     /**
      * Print the default JSON format.
      * @return the JSON result as a string
      */
-    public String toJson() {
-        return toJson(null).toString();
+    public JSONObject toJson() {
+        return toJson(null);
     }
     
     public JSONObject toJson(String[] options) { // TODO: add options exceptions
