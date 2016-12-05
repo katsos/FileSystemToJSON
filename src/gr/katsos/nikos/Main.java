@@ -21,6 +21,7 @@ public class Main {
             System.exit(-6);
         }
 
+        // TODO: remove this println
         String mess = "Chosen "
                 + (sourceFile.isDirectory() ? "folder" : "folder")
                 + ": " + sourceFile.getAbsoluteFile();
