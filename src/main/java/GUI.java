@@ -1,5 +1,3 @@
-package gr.katsos.nikos;
-
 import java.awt.HeadlessException;
 import javax.swing.JFileChooser;
 
@@ -16,7 +14,7 @@ public class GUI {
 
             if ( status == JFileChooser.APPROVE_OPTION ) {
                 String filepath = fileChooser.getSelectedFile().getAbsolutePath();
-                Main.setSourceFile(filepath);
+//                Main.setSourceFile(filepath);
             } else if ( status == JFileChooser.CANCEL_OPTION ) {
                 System.out.println("File choosing canceled!");
                 System.exit(-5);

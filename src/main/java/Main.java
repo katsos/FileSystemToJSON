@@ -1,5 +1,3 @@
-package gr.katsos.nikos;
-
 import java.io.IOException;
 
 public class Main {
@@ -34,7 +32,7 @@ public class Main {
             try {
                 destinFile.createNewFile();
             } catch (IOException ex) {
-                System.err.printf("Couldn't create %s file", 
+                System.err.printf("Couldn't create %s file",
                         destinFile.getAbsolutePath());
                 System.exit(-4);
             }

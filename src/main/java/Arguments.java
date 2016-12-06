@@ -1,5 +1,3 @@
-package gr.katsos.nikos;
-
 import java.util.ArrayList;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -49,7 +47,7 @@ public class Arguments {
             } else {
                 Main.getSourceFile().mapContent();
             }
-            
+
             if (command.getOptions().length == 1) { // TODO: fix this line
                 Main.finalJson = Main.getSourceFile().toJson().toString();
             } else {
@@ -89,18 +87,18 @@ public class Arguments {
             System.err.println("Invalid depth input!");
             System.exit(-2);
         }
-        
+
         return 0;
     }
 
     private static String[] parseOptions() {
         ArrayList<String> optionsList = new ArrayList();
-        
+
         for( Option option : command.getOptions() ) {
             if ( option.hasArgs() ) continue;
             optionsList.add(option.getLongOpt());
         }
-        
+
         return optionsList.toArray(new String[0]);
     }
 

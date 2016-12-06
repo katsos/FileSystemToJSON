@@ -1,9 +1,7 @@
-package gr.katsos.nikos;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import org.json.simple.*;
+import org.json.*;
 
 public class FileExtended extends File {
 
@@ -25,7 +23,7 @@ public class FileExtended extends File {
         }
 
         // TODO: add this regex check
-        // this pattern matches whateverDOTwhatever...DOTwhateverEND, 
+        // this pattern matches whateverDOTwhatever...DOTwhateverEND,
         // which whatever means "whatever except dot"
         // Pattern regex = Pattern.compile("[.^\\.]+[\\.+.+]+");
         String filename = this.getName();
@@ -72,7 +70,7 @@ public class FileExtended extends File {
     public void mapContent() {
         mapContent(Integer.MAX_VALUE);
     }
-    
+
     /** dedicated variable for mapContent() method */
     private static int depthExplored = 1;
     /**
@@ -106,7 +104,7 @@ public class FileExtended extends File {
     public String getPermissions() {
         return permissions;
     }
-    
+
     /**
      * Print the default JSON format.
      * @return the JSON result as a string
@@ -114,10 +112,10 @@ public class FileExtended extends File {
     public JSONObject toJson() {
         return toJson(null);
     }
-    
+
     public JSONObject toJson(String[] options) { // TODO: add options exceptions
         JSONObject obj = new JSONObject();
-        
+
         Field[] fields = FileExtended.class.getDeclaredFields();
         for (Field field : fields) {
             try {
@@ -127,23 +125,23 @@ public class FileExtended extends File {
                 obj.put(field.getName(), field.get(this));
             } catch (Exception ex) {
                 System.exit(666);
-//                throw new Exception("Couldn't convert file " + this.getName()
-//                        + " into json! \n" + ex.getMessage());
+                // throw new Exception("Couldn't convert file " + this.getName()
+                //  + " into json! \n" + ex.getMessage());
             }
         }
 
         if (isDirectory() && content != null) {
             JSONArray contentJSONArray = this.contentToJson();
-            obj.put("content", contentJSONArray);            
+            obj.put("content", contentJSONArray);
         }
 
         return obj;
     }
-    
+
     public JSONArray contentToJson() {
         JSONArray contentJSONArray = new JSONArray();
         for (FileExtended file : content) {
-            contentJSONArray.add(file.toJson(null));
+            contentJSONArray.put(file.toJson(null));
         }
         return contentJSONArray;
     }

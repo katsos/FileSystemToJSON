@@ -1,14 +1,22 @@
+## OS
+.DS_Store
+
 ## IntelliJ IDEA
 .idea
 out
 *.iml
 
-
 ## NetBeans IDE
 build
-lib/CopyLibs
-lib/nblibraries.properties
+lib
 nbproject
 build.xml
 manifest.mf
-/dist/
+dist
+
+## Gradle
+.gradle
+build
+dist
+gradlew
+gradlew.bat
