@@ -12,27 +12,7 @@ public class Arguments {
     private static CommandLine command;
     private static Options options;
 
-    public static void handle(String[] args) {
-        /* if no arguments given, start gui file chooser*/
-        if (args.length == 0) {
-            GUI.openFileChooser();
-        } else {
-            Main.setSourceFile(args[0]);
-
-            if (args.length < 3) {
-                if ( args.length == 3 ) {
-                    Main.setDestinFile(args[1]);
-                }
-                Main.getSourceFile().mapContent();
-                Main.finalJson = Main.getSourceFile().toJson().toString();
-            } else {
-                Arguments.parse(args);
-            }
-
-        }
-    }
-
-    private static void parse(String[] args) {
+    public static void parse(String[] args) {
         parser = new DefaultParser();
         setOptions();
 

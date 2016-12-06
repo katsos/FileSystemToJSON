@@ -7,8 +7,12 @@ public class Main {
     public static String finalJson;
 
     public static void main(String[] args) throws Exception {
-        Arguments.handle(args);
-        System.out.println(finalJson);
+        if ( args.length == 0 ) {
+            GUI.openFileChooser();
+        } else {
+            Arguments.parse(args);
+        }
+        Exporter.export(finalJson);
     }
 
     public static void setSourceFile(String filepath) {
