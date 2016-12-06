@@ -16,24 +16,9 @@ public class FileExtended extends File {
     }
 
     private void setType() {
-
-        if (this.isDirectory()) {
-            type = "directory";
-            return;
-        }
-
-        // TODO: add this regex check
-        // this pattern matches whateverDOTwhatever...DOTwhateverEND,
-        // which whatever means "whatever except dot"
-        // Pattern regex = Pattern.compile("[.^\\.]+[\\.+.+]+");
-        String filename = this.getName();
-        String extension = filename.substring(filename.lastIndexOf('.') + 1);
-        if (extension.isEmpty()) {
-            type = "unknown";
-        } else {
-            // TODO: add converter for human readable types
-            type = extension;
-        }
+        type = this.isDirectory()
+                ? "directory"
+                : getName().substring(getName().lastIndexOf('.') + 1);;
     }
 
     private void setPermissions() {
