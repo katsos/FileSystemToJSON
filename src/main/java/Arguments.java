@@ -26,10 +26,7 @@ public class Arguments {
             argsGiven = command.getArgList();
             optsGiven = command.getOptions();
 
-            if ( argsGiven.isEmpty() ) {
-                System.err.println("No source path given");
-                System.exit(2001);
-            }
+
 
             parseArguments();
 
@@ -74,7 +71,10 @@ public class Arguments {
     private static void parseArguments() {
         int argsGivenSize = argsGiven.size();
 
-        if( argsGivenSize > 2 ) {
+        if ( argsGiven.isEmpty() ) {
+            System.err.println("No source path given");
+            System.exit(2001);
+        } else if( argsGivenSize > 2 ) {
             System.err.println("Uknown argument met");
             System.exit(2002);
         }
