@@ -58,12 +58,12 @@ public class Arguments {
 
     private static void setOptions() {
         options = new Options()
-            .addOption("t", "type", false, "display current type")
+            .addOption("n", "name", false, "Display the name of the file")
+            .addOption("t", "type", false, "Display the type of the file")
             .addOption("p", "permissions", false, "Display current permissions")
-            .addOption("n", "name", false, "display current name")
-            .addOption("T", "no-type", false, "display current type")
-            .addOption("P", "no-permissions", false, "display current type")
-            .addOption("N", "no-name", false, "display current type")
+//            .addOption("T", "no-type", false, "display current type")
+//            .addOption("P", "no-permissions", false, "display current type")
+//            .addOption("N", "no-name", false, "display current type")
             .addOption(Option.builder("d").longOpt("depth")
                 .desc("execute to this depth value")
                 .hasArg()
@@ -100,9 +100,10 @@ public class Arguments {
     }
 
     private static String[] parseOptions() {
-        ArrayList<String> optionsList = new ArrayList();
+        ArrayList<String> optionsList = new ArrayList<String>();
 
         for( Option option : command.getOptions() ) {
+            /* ignore options with variables */
             if ( option.hasArgs() ) continue;
             optionsList.add(option.getLongOpt());
         }
