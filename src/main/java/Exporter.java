@@ -8,7 +8,7 @@ public class Exporter {
     public static File file;
 
     public static void export(String text) {
-        export(text, Main.getSourceFile().getName() + ".json");
+        export(text, Main.getSourceFile().getAbsolutePath() + ".json");
     }
 
     public static void export(String data, String filepath) {
