@@ -18,8 +18,9 @@ public class Exporter {
             System.out.println("The file " + file.getAbsolutePath() +
                 (file.createNewFile() ? " is created" : " already exists") );
         } catch (IOException ex) {
-            System.err.println("Couldn't create " +  file.getAbsolutePath()
-                + " file.");
+            // TODO: give user the option to check other available filepaths
+            // to save his file instead of terminating the program
+            System.err.println("Couldn't create " +  file.getAbsolutePath() + " file.");
             System.exit(3001);
         }
 
@@ -37,8 +38,7 @@ public class Exporter {
     public static void display() {
 
         if( file == null ) {
-            System.err.println("The file isn't exported yet, "
-                    + "so it cannot be displayed! ");
+            System.err.println("The file isn't exported yet, so it cannot be displayed!");
             return;
         }
 
