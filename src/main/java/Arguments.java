@@ -65,7 +65,7 @@ public class Arguments {
 //            .addOption("P", "no-permissions", false, "display current type")
 //            .addOption("N", "no-name", false, "display current type")
             .addOption(Option.builder("d").longOpt("depth")
-                .desc("execute to this depth value")
+                .desc("Search folder recursively with depth limit")
                 .hasArg()
                 .required(false)
                 .build());
