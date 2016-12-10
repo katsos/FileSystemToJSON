@@ -24,13 +24,16 @@ public class Exporter {
             System.exit(3001);
         }
 
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.write(data);
+        try {
+            FileWriter writer = new FileWriter(file);
+            System.out.println(jsonToString);
+            writer.write(jsonToString);
             writer.close();
         } catch (IOException ex) {
-            System.err.println("Couldn't write in " +  file.getAbsolutePath()
-                + " file.");
+            System.err.println("Couldn't write into " +  file.getAbsolutePath() + " file.");
             System.exit(3002);
+        } catch (Exception ex) {
+            System.err.println(ex.toString());
         }
 
     }
