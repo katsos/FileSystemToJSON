@@ -46,7 +46,7 @@ public class Arguments {
             }
 
         } catch (ParseException e) {
-            System.err.println("An error occured while parsing the arguments!");
+            System.err.println("An error occurred while parsing the arguments!");
             System.err.println(e.getMessage());
             System.exit(2001);
         }
