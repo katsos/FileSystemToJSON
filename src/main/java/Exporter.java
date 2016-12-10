@@ -7,11 +7,17 @@ public class Exporter {
 
     public static File file;
 
-    public static void export(String text) {
-        export(text, Main.getSourceFile().getAbsolutePath() + ".json");
+    public static void export(String jsonToString) {
+        export(jsonToString, Main.getSourceFile().getAbsolutePath() + ".json");
     }
 
-    public static void export(String data, String filepath) {
+    public static void export(String jsonToString, String filepath) {
+
+        if (jsonToString == null) {
+            System.err.println("No data to display");
+            System.exit(5000);
+        }
+
         file = new File(filepath);
 
         try {
