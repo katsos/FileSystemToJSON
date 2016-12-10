@@ -17,8 +17,7 @@ public class FileExtended extends File {
 
     private void setType() {
         type = this.isDirectory()
-                ? "directory"
-                : getName().substring(getName().lastIndexOf('.') + 1);;
+                ? "directory" : getName().substring(getName().lastIndexOf('.') + 1);
     }
 
     private void setPermissions() {
