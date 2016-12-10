@@ -17,17 +17,12 @@ public class Main {
 
     public static void setSourceFile(String filepath) {
         sourceFile = new FileExtended(filepath);
+        System.out.println("Source folder: " + sourceFile.getAbsoluteFile());
 
         if (!sourceFile.exists()) {
-            System.err.println("The requested file or folder doesn't exist.");
+            System.err.println("The requested folder doesn't exist.");
             System.exit(-6);
         }
-
-        // TODO: remove this println
-        String mess = "Chosen "
-                + (sourceFile.isDirectory() ? "folder" : "folder")
-                + ": " + sourceFile.getAbsoluteFile();
-        System.out.println(mess);
     }
 
     public static void setDestinFile( String destinFilepath ) {
