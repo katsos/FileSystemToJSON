@@ -31,8 +31,7 @@ public class Main {
             try {
                 destinFile.createNewFile();
             } catch (IOException ex) {
-                System.err.printf("Couldn't create %s file",
-                        destinFile.getAbsolutePath());
+                System.err.println("Couldn't create " + destinFile.getAbsolutePath() + " file");
                 System.exit(-4);
             }
         }
