@@ -26,20 +26,12 @@ public class Arguments {
             argsGiven = command.getArgList();
             optsGiven = command.getOptions();
 
-
-
             parseArguments();
+            mapContent();
+            System.out.println(optsGiven.length);
 
-            // set the depth value that user gives
-            if (command.hasOption("depth")) {
-                int depth = parseDepthOption();
-                Main.getSourceFile().mapContent(depth);
-            } else {
-                Main.getSourceFile().mapContent();
-            }
-
-            if (command.getOptions().length == 1) { // TODO: fix this line
-                Main.finalJson = Main.getSourceFile().toJson().toString();
+            if (optsGiven.length == 0) {
+                Main.setFinalJson(Main.getSourceFile().toJson().toString());
             } else {
                 String[] optionsMet = parseOptions();
 //                Main.finalJson = Main.getSourceFile().toJson(optionsMet);
@@ -83,6 +75,16 @@ public class Arguments {
 
         if ( argsGivenSize == 2 ) {
             Main.setDestinFile(argsGiven.get(1));
+        }
+    }
+
+    private static void mapContent() {
+        // set the depth value that user gives
+        if (command.hasOption("depth")) {
+            int depth = parseDepthOption();
+            Main.getSourceFile().mapContent(depth);
+        } else {
+            Main.getSourceFile().mapContent();
         }
     }
 
