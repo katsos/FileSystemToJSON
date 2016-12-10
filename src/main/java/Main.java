@@ -4,7 +4,7 @@ public class Main {
 
     private static FileExtended sourceFile;
     private static FileExtended destinFile;
-    public static String finalJson;
+    private static String finalJson;
 
     public static void main(String[] args) throws Exception {
         if ( args.length == 0 ) {
@@ -44,5 +44,11 @@ public class Main {
 
     public static FileExtended getSourceFile() {
         return sourceFile;
+    }
+
+    public static String getFinalJson() { return finalJson; }
+
+    public static void setFinalJson(String finalJson) {
+        Main.finalJson = finalJson;
     }
 }
