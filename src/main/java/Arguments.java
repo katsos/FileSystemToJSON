@@ -72,10 +72,10 @@ public class Arguments {
         int argsGivenSize = argsGiven.size();
 
         if ( argsGiven.isEmpty() ) {
-            System.err.println("No source path given");
+            System.err.println("No source folder given.");
             System.exit(2001);
         } else if( argsGivenSize > 2 ) {
-            System.err.println("Uknown argument met");
+            System.err.println("Unknown argument met [" + argsGiven.get(2) + "]");
             System.exit(2002);
         }
 
