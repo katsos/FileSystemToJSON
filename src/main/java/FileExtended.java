@@ -1,6 +1,7 @@
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+
 import org.json.*;
 
 public class FileExtended extends File {
@@ -97,21 +98,20 @@ public class FileExtended extends File {
         return toJson(null);
     }
 
-    public JSONObject toJson(String[] options) { // TODO: add options exceptions
+    public JSONObject toJson(String[] options) {
         JSONObject jsonObject = new JSONObject();
 
-        Field[] fields = FileExtended.class.getDeclaredFields();
-        for (Field field : fields) {
-            try {
-                if (field.get(this) == null) {
-                    continue;
-                }
-                jsonObject.put(field.getName(), field.get(this));
-            } catch (Exception ex) {
-                System.err.println("Couldn't convert file " + this.getName() + " into json!");
-                System.err.println(ex.getMessage());
-                System.exit(666);
+        jsonObject.put("name", getName());
+
+        if ( options != null && options.length > 0 ) {
+            if( Util.contains(options, "t") ) {
+                jsonObject.put("type", type);
             }
+            if( Util.contains(options, "p") ) {
+                jsonObject.put("permissions", permissions);
+            }
+        } else {
+            // put the default properties
         }
 
         if (isDirectory() && content != null) {
