@@ -97,8 +97,8 @@ public class FileExtended extends File {
         return toJson(null);
     }
 
-    public JSONObject toJson(String[] options) { // TODO: add options exceptions
-        JSONObject obj = new JSONObject();
+    private JSONObject toJson(String[] options) { // TODO: add options exceptions
+        JSONObject jsonObject = new JSONObject();
 
         Field[] fields = FileExtended.class.getDeclaredFields();
         for (Field field : fields) {
@@ -106,23 +106,23 @@ public class FileExtended extends File {
                 if (field.get(this) == null) {
                     continue;
                 }
-                obj.put(field.getName(), field.get(this));
+                jsonObject.put(field.getName(), field.get(this));
             } catch (Exception ex) {
+                System.err.println("Couldn't convert file " + this.getName() + " into json!");
+                System.err.println(ex.getMessage());
                 System.exit(666);
-                // throw new Exception("Couldn't convert file " + this.getName()
-                //  + " into json! \n" + ex.getMessage());
             }
         }
 
         if (isDirectory() && content != null) {
             JSONArray contentJSONArray = this.contentToJson();
-            obj.put("content", contentJSONArray);
+            jsonObject.put("content", contentJSONArray);
         }
 
-        return obj;
+        return jsonObject;
     }
 
-    public JSONArray contentToJson() {
+    private JSONArray contentToJson() {
         JSONArray contentJSONArray = new JSONArray();
         for (FileExtended file : content) {
             contentJSONArray.put(file.toJson(null));
