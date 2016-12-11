@@ -31,10 +31,10 @@ public class Arguments {
             System.out.println(optsGiven.length);
 
             if (optsGiven.length == 0) {
-                Main.setFinalJson(Main.getSourceFile().toJson().toString());
+                Main.setFinalJson(Main.getSourceFile().toJson());
             } else {
                 String[] optionsMet = parseOptions();
-//                Main.finalJson = Main.getSourceFile().toJson(optionsMet);
+                Main.setFinalJson(Main.getSourceFile().toJson(null)); // TODO: fill this arg
             }
 
         } catch (ParseException e) {

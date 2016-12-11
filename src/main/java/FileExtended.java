@@ -97,7 +97,7 @@ public class FileExtended extends File {
         return toJson(null);
     }
 
-    private JSONObject toJson(String[] options) { // TODO: add options exceptions
+    public JSONObject toJson(String[] options) { // TODO: add options exceptions
         JSONObject jsonObject = new JSONObject();
 
         Field[] fields = FileExtended.class.getDeclaredFields();

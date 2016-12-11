@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
@@ -7,13 +9,13 @@ public class Exporter {
 
     public static File file;
 
-    public static void export(String jsonToString) {
+    public static void export(JSONObject jsonToString) {
         export(jsonToString, Main.getSourceFile().getAbsolutePath() + ".json");
     }
 
-    public static void export(String jsonToString, String filepath) {
+    public static void export(JSONObject jsonObject, String filepath) {
 
-        if (jsonToString == null) {
+        if (jsonObject == null) {
             System.err.println("No data to display");
             System.exit(5000);
         }
@@ -32,8 +34,7 @@ public class Exporter {
 
         try {
             FileWriter writer = new FileWriter(file);
-            System.out.println(jsonToString);
-            writer.write(jsonToString);
+            writer.write(jsonObject.toString(2));
             writer.close();
         } catch (IOException ex) {
             System.err.println("Couldn't write into " +  file.getAbsolutePath() + " file.");

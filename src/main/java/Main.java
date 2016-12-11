@@ -1,10 +1,12 @@
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 public class Main {
 
     private static FileExtended sourceFile;
     private static FileExtended destinFile;
-    private static String finalJson;
+    private static JSONObject finalJson;
 
     public static void main(String[] args) throws Exception {
         if ( args.length == 0 ) {
@@ -45,9 +47,9 @@ public class Main {
         return sourceFile;
     }
 
-    public static String getFinalJson() { return finalJson; }
+    public static JSONObject getFinalJson() { return finalJson; }
 
-    public static void setFinalJson(String finalJson) {
+    public static void setFinalJson(JSONObject finalJson) {
         Main.finalJson = finalJson;
     }
 }
