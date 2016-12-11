@@ -34,7 +34,7 @@ public class Arguments {
                 Main.setFinalJson(Main.getSourceFile().toJson());
             } else {
                 String[] optionsMet = parseOptions();
-                Main.setFinalJson(Main.getSourceFile().toJson(null)); // TODO: fill this arg
+                Main.setFinalJson(Main.getSourceFile().toJson(optionsMet));
             }
 
         } catch (ParseException e) {
@@ -109,6 +109,16 @@ public class Arguments {
         }
 
         return optionsList.toArray(new String[0]);
+    }
+
+    public static String[] getOptionsGiven() {
+        ArrayList<String> optionsGiven = new ArrayList<String>();
+
+        for(Option o : optsGiven) {
+            optionsGiven.add(o.getOpt());
+        }
+
+        return optionsGiven.toArray(new String[0]);
     }
 
 }
