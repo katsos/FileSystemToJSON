@@ -47,17 +47,15 @@ public class Arguments {
 
     private static void setOptions() {
         options = new Options()
-            .addOption("n", "name", false, "Display the name of the file")
             .addOption("t", "type", false, "Display the type of the file")
             .addOption("p", "permissions", false, "Display current permissions")
-//            .addOption("T", "no-type", false, "display current type")
-//            .addOption("P", "no-permissions", false, "display current type")
-//            .addOption("N", "no-name", false, "display current type")
-            .addOption(Option.builder("d").longOpt("depth")
+            .addOption(Option.builder().longOpt("depth")
                 .desc("Search folder recursively with depth limit")
-                .hasArg()
-                .required(false)
-                .build());
+                .hasArg().required(false).build())
+            .addOption(Option.builder()
+                .longOpt("pretty")
+                .desc("Print json pretty. Give your desired indentation")
+                .hasArg().required(false).build());
     }
 
     private static void parseArguments() {
