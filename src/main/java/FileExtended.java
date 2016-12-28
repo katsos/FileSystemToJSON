@@ -52,10 +52,6 @@ public class FileExtended extends File {
         }
     }
 
-    public void mapContent() {
-        mapContent(Integer.MAX_VALUE);
-    }
-
     /** dedicated variable for mapContent() method */
     private static int depthExplored = 1;
     /**

@@ -5,17 +5,17 @@ public class Main {
 
     private static FileExtended sourceFile;
     private static FileExtended destinFile;
-    private static JSONObject finalJson;
 
     public static void main(String[] args) throws Exception {
+        /* if program called from GUI or without arguments */
         if ( args.length == 0 ) {
             GUI.openFileChooser();
-            sourceFile.mapContent();
         } else {
             Arguments.parse(args);
-            sourceFile.mapContent(Arguments.getDepth());
-            finalJson = Main.getSourceFile().toJson( Arguments.getOptionsGivenStringArray() ) ;
         }
+
+        sourceFile.mapContent(Arguments.getDepth());
+        JSONObject finalJson = Main.getSourceFile().toJson(Arguments.getOptionsGivenStringArray());
         Exporter.export(finalJson);
     }
 
@@ -39,10 +39,6 @@ public class Main {
                 System.exit(-4);
             }
         }
-    }
-
-    public static FileExtended getDestinFile() {
-        return destinFile;
     }
 
     public static FileExtended getSourceFile() {
