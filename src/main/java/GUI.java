@@ -16,12 +16,11 @@ public class GUI {
                 Main.setSourceFilepath(fileChooser.getSelectedFile().getAbsolutePath());
             } else if ( status == JFileChooser.CANCEL_OPTION ) {
                 System.out.println("File choosing canceled!");
-                System.exit(-5);
+                System.exit(0);
             }
         } catch (HeadlessException e) {
-            System.err.println("Graphical Interface isn't supported " 
-                    + "on your machine. Try using the programming with "
-                    + "its command line arguments and options");
+            System.err.println("Graphical Interface isn't supported on your machine.");
+            System.err.println("Try accessing the program through command line.");
             System.exit(-6);
         }
     }
