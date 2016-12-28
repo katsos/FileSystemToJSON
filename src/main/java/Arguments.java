@@ -10,7 +10,6 @@ import org.apache.commons.cli.ParseException;
 
 public class Arguments {
 
-    private static CommandLineParser parser;
     private static CommandLine command;
     private static Options options;
     private static List<String> argsGiven;
@@ -18,18 +17,16 @@ public class Arguments {
     private static String[] optionsMet;
 
     public static void parse(String[] args) {
-        parser = new DefaultParser();
+        CommandLineParser parser = new DefaultParser();
         setOptions();
 
         try {
             // parse the command line arguments
             command = parser.parse(options, args);
-            argsGiven = command.getArgList();
             optsGiven = command.getOptions();
 
             parseArguments();
             mapContent();
-            System.out.println(optsGiven.length);
 
             if (optsGiven.length == 0) {
                 Main.setFinalJson(Main.getSourceFile().toJson());
@@ -59,7 +56,13 @@ public class Arguments {
                 .hasArg().required(false).build());
     }
 
+    /**
+     * Checks command for source folder and export file arguments.
+     * If there no source folder argument exits the program with error code <i><2001</i>.
+     * If it meet more than 2 arguments exits the abort the program with error code <i><2002</i>.
+     */
     private static void parseArguments() {
+        argsGiven = command.getArgList();
         int argsGivenSize = argsGiven.size();
 
         if ( argsGiven.isEmpty() ) {
@@ -70,7 +73,7 @@ public class Arguments {
             System.exit(2002);
         }
 
-        Main.setSourceFile(argsGiven.get(0));
+        Main.setSourceFilepath(argsGiven.get(0));
 
         if ( argsGivenSize == 2 ) {
             Main.setDestinFile(argsGiven.get(1));
