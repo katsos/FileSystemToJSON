@@ -15,6 +15,7 @@ public class Arguments {
     private static Options options;
     private static List<String> argsGiven;
     private static Option[] optsGiven;
+    private static String[] optionsMet;
 
     public static void parse(String[] args) {
         parser = new DefaultParser();
@@ -33,7 +34,7 @@ public class Arguments {
             if (optsGiven.length == 0) {
                 Main.setFinalJson(Main.getSourceFile().toJson());
             } else {
-                String[] optionsMet = parseOptions();
+                optionsMet = parseOptions();
                 Main.setFinalJson(Main.getSourceFile().toJson(optionsMet));
             }
 
@@ -49,10 +50,10 @@ public class Arguments {
         options = new Options()
             .addOption("t", "type", false, "Display the type of the file")
             .addOption("p", "permissions", false, "Display current permissions")
-            .addOption(Option.builder().longOpt("depth")
+            .addOption(Option.builder("d").longOpt("depth")
                 .desc("Search folder recursively with depth limit")
                 .hasArg().required(false).build())
-            .addOption(Option.builder()
+            .addOption(Option.builder("pr")
                 .longOpt("pretty")
                 .desc("Print json pretty. Give your desired indentation")
                 .hasArg().required(false).build());
@@ -88,15 +89,27 @@ public class Arguments {
 
     private static int parseDepthOption() {
         String depthInput = command.getOptionValue("depth");
+        if ( depthInput == null ) return Integer.MAX_VALUE;
 
         try {
             return Integer.parseInt(depthInput);
         } catch (NumberFormatException e) {
             System.err.println("Invalid depth input!");
             System.exit(-2);
+            return -2;
         }
+    }
 
-        return 0;
+    private static int parsePrettyOption() {
+        String prettyInput = command.getOptionValue("pretty");
+        if ( prettyInput == null ) return 0;
+        try {
+            return Integer.parseInt(prettyInput);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid pretty-json input!");
+            System.exit(-2);
+            return -2;
+        }
     }
 
     private static String[] parseOptions() {
@@ -121,4 +134,10 @@ public class Arguments {
         return optionsGiven.toArray(new String[0]);
     }
 
+    public static int getIndentation() {
+
+        if ( Util.contains(optionsMet, "pr") ) return 0;
+
+        return parsePrettyOption();
+    }
 }
