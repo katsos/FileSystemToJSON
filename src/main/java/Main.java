@@ -1,5 +1,4 @@
 import org.json.JSONObject;
-
 import java.io.IOException;
 
 public class Main {
@@ -11,13 +10,16 @@ public class Main {
     public static void main(String[] args) throws Exception {
         if ( args.length == 0 ) {
             GUI.openFileChooser();
+            sourceFile.mapContent();
         } else {
             Arguments.parse(args);
+            sourceFile.mapContent(Arguments.getDepth());
+            Main.setFinalJson( Main.getSourceFile().toJson( Arguments.getOptionsGivenStringArray() ) );
         }
         Exporter.export(finalJson);
     }
 
-    public static void setSourceFile(String filepath) {
+    public static void setSourceFilepath(String filepath) {
         sourceFile = new FileExtended(filepath);
         System.out.println("Source folder: " + sourceFile.getAbsoluteFile());
 
@@ -47,7 +49,9 @@ public class Main {
         return sourceFile;
     }
 
-    public static JSONObject getFinalJson() { return finalJson; }
+    public static JSONObject getFinalJson() {
+        return finalJson;
+    }
 
     public static void setFinalJson(JSONObject finalJson) {
         Main.finalJson = finalJson;

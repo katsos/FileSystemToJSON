@@ -19,28 +19,16 @@ public class Arguments {
     public static void parse(String[] args) {
         CommandLineParser parser = new DefaultParser();
         setOptions();
-
         try {
-            // parse the command line arguments
             command = parser.parse(options, args);
-            optsGiven = command.getOptions();
-
             parseArguments();
-            mapContent();
-
-            if (optsGiven.length == 0) {
-                Main.setFinalJson(Main.getSourceFile().toJson());
-            } else {
-                optionsMet = parseOptions();
-                Main.setFinalJson(Main.getSourceFile().toJson(optionsMet));
-            }
-
-        } catch (ParseException e) {
+            parseOptions();
+            setOptsGivenStringArray();
+        } catch (Exception e) {
             System.err.println("An error occurred while parsing the arguments!");
             System.err.println(e.getMessage());
             System.exit(2001);
         }
-
     }
 
     private static void setOptions() {
@@ -61,33 +49,24 @@ public class Arguments {
      * If there no source folder argument exits the program with error code <i><2001</i>.
      * If it meet more than 2 arguments exits the abort the program with error code <i><2002</i>.
      */
-    private static void parseArguments() {
+    private static void parseArguments() throws Exception {
         argsGiven = command.getArgList();
         int argsGivenSize = argsGiven.size();
 
         if ( argsGiven.isEmpty() ) {
-            System.err.println("No source folder given.");
-            System.exit(2001);
+            throw new Exception("No source folder given.");
         } else if( argsGivenSize > 2 ) {
-            System.err.println("Unknown argument met [" + argsGiven.get(2) + "]");
-            System.exit(2002);
+            throw new Exception("Unknown argument met [" + argsGiven.get(2) + "]");
         }
 
         Main.setSourceFilepath(argsGiven.get(0));
-
-        if ( argsGivenSize == 2 ) {
-            Main.setDestinFile(argsGiven.get(1));
-        }
+        if ( argsGivenSize == 2 ) Main.setDestinFile(argsGiven.get(1));
     }
 
-    private static void mapContent() {
-        // set the depth value that user gives
-        if (command.hasOption("depth")) {
-            int depth = parseDepthOption();
-            Main.getSourceFile().mapContent(depth);
-        } else {
-            Main.getSourceFile().mapContent();
-        }
+    private static void parseOptions() {
+        setIndentation();
+        setDepth();
+        setOptsGivenStringArray();
     }
 
     private static int parseDepthOption() {
