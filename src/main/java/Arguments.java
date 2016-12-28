@@ -60,7 +60,7 @@ public class Arguments {
         }
 
         Main.setSourceFilepath(argsGiven.get(0));
-        if ( argsGivenSize == 2 ) Main.setDestinFile(argsGiven.get(1));
+        if ( argsGivenSize == 2 ) Main.setDestinFilepath(argsGiven.get(1));
     }
 
     private static void parseOptions() {

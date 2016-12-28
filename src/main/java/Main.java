@@ -29,7 +29,7 @@ public class Main {
         }
     }
 
-    public static void setDestinFile( String destinFilepath ) {
+    public static void setDestinFilepath(String destinFilepath ) {
         destinFile = new FileExtended(destinFilepath);
         if (!destinFile.exists()) {
             try {
