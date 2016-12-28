@@ -13,8 +13,7 @@ public class GUI {
             int status = fileChooser.showOpenDialog(null);
 
             if ( status == JFileChooser.APPROVE_OPTION ) {
-                String filepath = fileChooser.getSelectedFile().getAbsolutePath();
-//                Main.setSourceFile(filepath);
+                Main.setSourceFilepath(fileChooser.getSelectedFile().getAbsolutePath());
             } else if ( status == JFileChooser.CANCEL_OPTION ) {
                 System.out.println("File choosing canceled!");
                 System.exit(-5);
