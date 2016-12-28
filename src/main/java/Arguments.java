@@ -6,15 +6,20 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 
 public class Arguments {
+
+    private static final int DEFAULT_INDENTATION = 0;
+    private static final int DEFAULT_DEPTH = Integer.MAX_VALUE;
 
     private static CommandLine command;
     private static Options options;
     private static List<String> argsGiven;
     private static Option[] optsGiven;
-    private static String[] optionsMet;
+    private static String[] optsGivenStringArray;
+
+    private static int indentation;
+    private static int depth;
 
     public static void parse(String[] args) {
         CommandLineParser parser = new DefaultParser();
@@ -38,8 +43,7 @@ public class Arguments {
             .addOption(Option.builder("d").longOpt("depth")
                 .desc("Search folder recursively with depth limit")
                 .hasArg().required(false).build())
-            .addOption(Option.builder("pr")
-                .longOpt("pretty")
+            .addOption(Option.builder("pr").longOpt("pretty")
                 .desc("Print json pretty. Give your desired indentation")
                 .hasArg().required(false).build());
     }
@@ -69,32 +73,12 @@ public class Arguments {
         setOptsGivenStringArray();
     }
 
-    private static int parseDepthOption() {
-        String depthInput = command.getOptionValue("depth");
-        if ( depthInput == null ) return Integer.MAX_VALUE;
+    /**
+     * Set the list with all <i>boolean</i> options that met in the given command.
+     */
+    private static void setOptsGivenStringArray() {
+        optsGiven = command.getOptions();
 
-        try {
-            return Integer.parseInt(depthInput);
-        } catch (NumberFormatException e) {
-            System.err.println("Invalid depth input!");
-            System.exit(-2);
-            return -2;
-        }
-    }
-
-    private static int parsePrettyOption() {
-        String prettyInput = command.getOptionValue("pretty");
-        if ( prettyInput == null ) return 0;
-        try {
-            return Integer.parseInt(prettyInput);
-        } catch (NumberFormatException e) {
-            System.err.println("Invalid pretty-json input!");
-            System.exit(-2);
-            return -2;
-        }
-    }
-
-    private static String[] parseOptions() {
         ArrayList<String> optionsList = new ArrayList<String>();
 
         for( Option option : command.getOptions() ) {
@@ -103,23 +87,51 @@ public class Arguments {
             optionsList.add(option.getLongOpt());
         }
 
-        return optionsList.toArray(new String[0]);
+        optsGivenStringArray = optionsList.toArray(new String[0]);
     }
 
-    public static String[] getOptionsGiven() {
-        ArrayList<String> optionsGiven = new ArrayList<String>();
+    public static String[] getOptionsGivenStringArray() {
+        return optsGivenStringArray;
+    }
 
-        for(Option o : optsGiven) {
-            optionsGiven.add(o.getOpt());
+    private static void setIndentation() {
+        String prettyInput = command.getOptionValue("pretty");
+
+        if ( prettyInput == null ) {
+            indentation = DEFAULT_INDENTATION;
+            return;
         }
 
-        return optionsGiven.toArray(new String[0]);
+        try {
+            indentation = Integer.parseInt(prettyInput);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid \"prety\" input!");
+            System.exit(-2);
+        }
+    }
+
+    private static void setDepth() {
+        String depthInput = command.getOptionValue("depth");
+
+        if ( depthInput == null ) {
+            depth = DEFAULT_DEPTH;
+            return;
+        }
+
+        try {
+            depth = Integer.parseInt(depthInput);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid \"depth\" input!");
+            System.exit(-2);
+        }
     }
 
     public static int getIndentation() {
-
-        if ( Util.contains(optionsMet, "pr") ) return 0;
-
-        return parsePrettyOption();
+        return indentation;
     }
+
+    public static int getDepth() {
+        return depth;
+    }
+
 }
