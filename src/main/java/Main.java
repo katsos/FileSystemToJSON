@@ -14,7 +14,7 @@ public class Main {
         } else {
             Arguments.parse(args);
             sourceFile.mapContent(Arguments.getDepth());
-            Main.setFinalJson( Main.getSourceFile().toJson( Arguments.getOptionsGivenStringArray() ) );
+            finalJson = Main.getSourceFile().toJson( Arguments.getOptionsGivenStringArray() ) ;
         }
         Exporter.export(finalJson);
     }
@@ -49,11 +49,4 @@ public class Main {
         return sourceFile;
     }
 
-    public static JSONObject getFinalJson() {
-        return finalJson;
-    }
-
-    public static void setFinalJson(JSONObject finalJson) {
-        Main.finalJson = finalJson;
-    }
 }
