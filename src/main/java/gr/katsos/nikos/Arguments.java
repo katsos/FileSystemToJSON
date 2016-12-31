@@ -1,6 +1,9 @@
+package gr.katsos.nikos;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import gr.katsos.nikos.Main;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;

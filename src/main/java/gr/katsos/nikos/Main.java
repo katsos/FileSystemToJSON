@@ -1,3 +1,5 @@
+package gr.katsos.nikos;
+
 import org.json.JSONObject;
 import java.io.IOException;
 

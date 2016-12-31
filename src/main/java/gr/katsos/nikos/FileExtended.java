@@ -1,3 +1,5 @@
+package gr.katsos.nikos;
+
 import java.io.File;
 import java.util.ArrayList;
 

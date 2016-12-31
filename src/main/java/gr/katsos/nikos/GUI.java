@@ -1,3 +1,7 @@
+package gr.katsos.nikos;
+
+import gr.katsos.nikos.Main;
+
 import java.awt.HeadlessException;
 import javax.swing.JFileChooser;
 
