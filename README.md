@@ -1,5 +1,7 @@
 #FileSystemToJSON
-This is a lightweight and cross-platform Java application to JSONize any filesystem recursively.
+This is a lightweight and cross-platform Java application to JSONize any filesystem recursively.  
+
+[Download alpha version](https://github.com/katsos/FileSystemToJSON/raw/master/dist/fstojson-alpha.jar).
 
 
 ## Dependencies
