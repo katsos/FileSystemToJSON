@@ -5,17 +5,11 @@ import java.io.IOException;
 
 public class Main {
 
-    private static FileExtended sourceFile;
-    private static FileExtended destinFile;
+    private static FileExtended sourceFile = null;
+    private static FileExtended destinFile = null;
 
     public static void main(String[] args) throws Exception {
-        /* if program called from GUI or without arguments */
-        if ( args.length == 0 ) {
-            GUI.openFileChooser();
-        } else {
-            Arguments.parse(args);
-        }
-
+        Arguments.parse(args);
         sourceFile.mapContent(Arguments.getDepth());
         JSONObject finalJson = Main.getSourceFile().toJson(Arguments.getOptionsGivenStringArray());
         Exporter.export(finalJson);
@@ -46,5 +40,7 @@ public class Main {
     public static FileExtended getSourceFile() {
         return sourceFile;
     }
+
+    public static FileExtended getDestinFile() { return destinFile; }
 
 }

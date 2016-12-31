@@ -34,22 +34,6 @@ public class Exporter {
         writeFile();
     }
 
-    public static void display() {
-
-        if( file == null ) {
-            System.err.println("The file isn't exported yet, so it cannot be displayed!");
-            return;
-        }
-
-        try {
-            Desktop desktop = Desktop.getDesktop();
-            desktop.browse(file.toURI());
-        } catch (IOException ex) {
-            System.err.println("Couldn't open " +  file.getAbsolutePath());
-            System.exit(3003);
-        }
-    }
-
     private static void askUserForOverwrite() {
         String answer;
 
