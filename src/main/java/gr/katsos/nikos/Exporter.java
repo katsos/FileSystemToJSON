@@ -2,7 +2,6 @@ package gr.katsos.nikos;
 
 import org.json.JSONObject;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,7 +13,12 @@ public class Exporter {
     private static JSONObject jsonObject;
 
     public static void export(JSONObject jsonToString) {
-        export(jsonToString, Main.getSourceFile().getAbsolutePath() + ".json");
+        if ( Main.getDestinFile() != null ) {
+            export(jsonToString, Main.getDestinFile().getAbsolutePath());
+        } else {
+            export(jsonToString, Main.getSourceFile().getAbsolutePath() + "/"
+                    + Main.getSourceFile().getName() +".json");
+        }
     }
 
     public static void export(JSONObject jsonObject, String filepath) {
