@@ -18,7 +18,6 @@ public class Arguments {
     private static CommandLine command;
     private static Options options;
     private static List<String> argsGiven;
-    private static Option[] optsGiven;
     private static String[] optsGivenStringArray;
 
     private static int indentation;
@@ -80,7 +79,7 @@ public class Arguments {
      * Set the list with all <i>boolean</i> options that met in the given command.
      */
     private static void setOptsGivenStringArray() {
-        optsGiven = command.getOptions();
+        Option[] optsGiven = command.getOptions();
 
         ArrayList<String> optionsList = new ArrayList<String>();
 
