@@ -1,5 +1,4 @@
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.json.*;
@@ -78,14 +77,6 @@ public class FileExtended extends File {
         return content;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public String getPermissions() {
-        return permissions;
-    }
-
     /**
      * Print the default JSON format.
      * @return the JSON result as a string
@@ -96,24 +87,37 @@ public class FileExtended extends File {
 
     public JSONObject toJson(String[] options) {
         JSONObject jsonObject = new JSONObject();
-
         jsonObject.put("name", getName());
 
         if ( options != null && options.length > 0 ) {
-            if( Util.contains(options, "t") ) {
-                jsonObject.put("type", type);
-            }
-            if( Util.contains(options, "p") ) {
-                jsonObject.put("permissions", permissions);
-            }
+            jsonObject = addOptionalFields(jsonObject, options);
         } else {
-            // put the default properties
+            jsonObject = addDefaultFields(jsonObject);
         }
 
+        /* add content field for folders */
         if (isDirectory() && content != null) {
             JSONArray contentJSONArray = this.contentToJson();
             jsonObject.put("content", contentJSONArray);
         }
+
+        return jsonObject;
+    }
+
+    private JSONObject addOptionalFields(JSONObject jsonObject, String[] options) {
+        if( Util.contains(options, "t") ) {
+            jsonObject.put("type", type);
+        }
+        if( Util.contains(options, "p") ) {
+            jsonObject.put("permissions", permissions);
+        }
+
+        return jsonObject;
+    }
+
+    private JSONObject addDefaultFields(JSONObject jsonObject) {
+        jsonObject.put("type", type);
+        jsonObject.put("permissions", permissions);
 
         return jsonObject;
     }
