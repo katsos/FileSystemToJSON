@@ -3,17 +3,9 @@
 
 ## IntelliJ IDEA
 .idea
-out
-*.iml
-
-## NetBeans IDE
-nbproject
-build.xml
-manifest.mf
 
 ## Gradle
 .gradle
 build
-dist
 gradlew
 gradlew.bat
